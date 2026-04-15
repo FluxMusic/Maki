@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Maki
+Comment=Quick file previewer
+Exec=Maki
+Icon=document-preview
+Type=Application
+Terminal=false
+Categories=Qt;KDE;Utility;
+MimeType=image/png;image/jpeg;image/svg+xml;video/mp4;audio/mpeg;application/pdf;text/plain;
