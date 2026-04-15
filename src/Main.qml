@@ -3,8 +3,6 @@ import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 
-import io.github.FluxMusic.Maki
-
 Kirigami.ApplicationWindow
 {
     id: root
@@ -16,10 +14,17 @@ Kirigami.ApplicationWindow
 
     pageStack.initialPage: Kirigami.Page
     {
-        Controls.Label
+        Loader
         {
-            anchors.centerIn: parent
-            text: WindowManager.FileType
+            anchors.fill: parent
+            source:
+            {
+                switch(WindowManager.FileType)
+                {
+                    case "image": return "ImagePreview.qml"
+                    default: return "FallbackPreview.qml"
+                }
+            }
         }
     }
 }

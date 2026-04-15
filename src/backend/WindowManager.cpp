@@ -7,6 +7,11 @@ WindowManager::WindowManager(QObject* parent)
 : QObject(parent)
 {}
 
+QUrl WindowManager::getURL() const
+{
+    return m_URL;
+}
+
 void WindowManager::setURL(const QUrl& URL)
 {
     m_URL = URL;
@@ -14,7 +19,16 @@ void WindowManager::setURL(const QUrl& URL)
     QMimeDatabase db;
     QMimeType mime = db.mimeTypeForUrl(URL);
 
-    setFileType(mime.name());
+    if (mime.name().startsWith(QStringLiteral("image/")))
+    {
+        setFileType(QStringLiteral("image"));
+    }
+    else
+    {
+        setFileType(QStringLiteral("None"));
+    }
+    
+    Q_EMIT URLChanged();
 }
 
 QString WindowManager::getFileType() const

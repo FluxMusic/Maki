@@ -20,6 +20,8 @@ target_sources(Maki
 ecm_target_qml_sources(Maki
     SOURCES
     Main.qml
+    qml/ImagePreview.qml
+    qml/FallbackPreview.qml
 )
 
 target_link_libraries(Maki
