@@ -10,5 +10,6 @@ Item
         anchors.fill: parent
         source: WindowManager.URL
         fillMode: Image.PreserveAspectFit
+        mipmap: true
     }
 }

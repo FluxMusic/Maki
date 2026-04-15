@@ -15,13 +15,14 @@ find_package(Qt6 REQUIRED COMPONENTS
     Quick
     Gui
     Widgets
-)
-
-find_package(KF6 REQUIRED COMPONENTS
+    )
+    
+    find_package(KF6 REQUIRED COMPONENTS
     Kirigami
     I18n
     CoreAddons
     IconThemes
+    KIO
 )
 
 ecm_find_qmlmodule(org.kde.kirigami REQUIRED)

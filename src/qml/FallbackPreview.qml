@@ -5,9 +5,16 @@ Item
 {
     anchors.fill: parent
     
+    Image
+    {
+        anchors.fill: parent
+        source: WindowManager.URL
+        visible: WindowManager.URL !== ""
+    }
     Label
     {
         anchors.centerIn: parent
-        text: i18n("File not yet supported! Sorry!")
+        text: "No Preview available"
+        visible: WindowManager.URL === ""
     }
 }

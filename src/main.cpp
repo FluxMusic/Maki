@@ -20,7 +20,10 @@ int main(int argc, char* argv[])
     QApplication::setStyle(QStringLiteral("breeze"));
 
     QQmlApplicationEngine engine;
+
+    MakiImageProvider* imageProvider = new MakiImageProvider();
     
+    engine.addImageProvider(QStringLiteral("Maki"), imageProvider);
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.loadFromModule("io.github.FluxMusic.Maki", "Main");
     
@@ -28,6 +31,8 @@ int main(int argc, char* argv[])
     
     if (manager)
     {
+        manager->setImageProvider(imageProvider);
+
         if (app.arguments().size() > 1)
         {
             manager->setURL(QUrl::fromUserInput(app.arguments()[1]));

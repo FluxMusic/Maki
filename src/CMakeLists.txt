@@ -15,6 +15,7 @@ target_sources(Maki
     main.cpp
     backend/WindowManager.cpp
     backend/WindowManager.h
+    backend/ImageProvider.h
 )
 
 ecm_target_qml_sources(Maki
@@ -33,6 +34,8 @@ target_link_libraries(Maki
     KF6::I18n
     KF6::CoreAddons
     KF6::IconThemes
+    KF6::KIOCore
+    KF6::KIOGui
 )
 
 install(TARGETS Maki ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
