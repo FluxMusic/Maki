@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     {
         if (app.arguments().size() > 1)
         {
-            manager->setURL(app.arguments()[1]);
+            manager->setURL(QUrl::fromUserInput(app.arguments()[1]));
         }
         else
         {

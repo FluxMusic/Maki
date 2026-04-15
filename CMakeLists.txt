@@ -30,4 +30,6 @@ add_subdirectory(src)
 
 install(PROGRAMS io.github.FluxMusic.Maki.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 
+install(FILES io.github.FluxMusic.Maki.servicemenu.desktop DESTINATION ${KDE_INSTALL_DATADIR}/kio/servicemenus)
+
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

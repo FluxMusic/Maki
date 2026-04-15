@@ -3,21 +3,28 @@
 #include <QObject>
 #include <qqmlintegration.h>
 
+#include <QUrl>
+
 
 class WindowManager : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
     QML_SINGLETON
-    Q_PROPERTY(QString URL READ getURL WRITE setURL NOTIFY URLChanged)
+    Q_PROPERTY(QString FileType READ getFileType WRITE setFileType NOTIFY FileTypeChanged)
 public:
     explicit WindowManager(QObject* parent = nullptr);
 
 public:
-    QString getURL() const;
-    void setURL(const QString& URL);
-    Q_SIGNAL void URLChanged();
+
+    void setURL(const QUrl& URL);
+
+    QString getFileType() const;
+    void setFileType(const QString& FileType);
+    Q_SIGNAL void FileTypeChanged();
 
 private:
-    QString m_URL = QStringLiteral("Placeholder");
+    QUrl m_URL;
+
+    QString m_FileType = QStringLiteral("Placeholder");
 };

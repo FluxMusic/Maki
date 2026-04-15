@@ -1,16 +1,29 @@
 #include "WindowManager.h"
 
+#include <QMimeDatabase>
+#include <QMimeType>
+
 WindowManager::WindowManager(QObject* parent)
 : QObject(parent)
 {}
 
-QString WindowManager::getURL() const
-{
-    return m_URL;
-}
-
-void WindowManager::setURL(const QString& URL)
+void WindowManager::setURL(const QUrl& URL)
 {
     m_URL = URL;
-    Q_EMIT URLChanged();
+
+    QMimeDatabase db;
+    QMimeType mime = db.mimeTypeForUrl(URL);
+
+    setFileType(mime.name());
+}
+
+QString WindowManager::getFileType() const
+{
+    return m_FileType;
+}
+
+void WindowManager::setFileType(const QString& FileType)
+{
+    m_FileType = FileType;
+    Q_EMIT FileTypeChanged();
 }

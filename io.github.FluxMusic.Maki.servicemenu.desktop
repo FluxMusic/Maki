@@ -1,0 +1,10 @@
+[Desktop Entry]
+Actions=QuickPreview
+Icon=document-preview
+Type=Service
+MimeType=all/allfiles
+
+[Desktop Action QuickPreview]
+Exec=Maki %u
+Icon=document-preview
+Name=Quick Preview

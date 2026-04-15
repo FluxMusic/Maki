@@ -19,7 +19,7 @@ Kirigami.ApplicationWindow
         Controls.Label
         {
             anchors.centerIn: parent
-            text: WindowManager.URL
+            text: WindowManager.FileType
         }
     }
 }
