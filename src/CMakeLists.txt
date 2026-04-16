@@ -26,6 +26,7 @@ ecm_target_qml_sources(Maki
     qml/TextPreview.qml
     qml/AudioPreview.qml
     qml/VideoPreview.qml
+    qml/DocumentPreview.qml
 )
 
 target_link_libraries(Maki
@@ -38,6 +39,7 @@ target_link_libraries(Maki
     KF6::I18n
     KF6::CoreAddons
     KF6::IconThemes
+    Poppler::Qt6
 )
 
 install(TARGETS Maki ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

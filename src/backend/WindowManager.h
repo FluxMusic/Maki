@@ -20,6 +20,7 @@ class WindowManager : public QObject
     Q_PROPERTY(QUrl URL READ getURL WRITE setURL NOTIFY URLChanged)
     Q_PROPERTY(QSize WindowSize READ getWindowSize WRITE setWindowSize NOTIFY WindowSizeChanged)
     Q_PROPERTY(QString FileText READ getFileText NOTIFY FileTextChanged)
+    Q_PROPERTY(int PageNum READ getPageNum NOTIFY PageNumChanged)
     
 public:
     explicit WindowManager(QObject* parent = nullptr);
@@ -42,6 +43,9 @@ public:
     QString getFileText() const;
     Q_SIGNAL void FileTextChanged();
 
+    int getPageNum() const;
+    Q_SIGNAL void PageNumChanged();
+
 private:
     QSize m_WindowSize;
 
@@ -52,4 +56,6 @@ private:
     QString m_FileText = QStringLiteral("Placeholder");
 
     MakiImageProvider* m_pImageProvider { nullptr };
+
+    int m_PageNum { 0 };
 };

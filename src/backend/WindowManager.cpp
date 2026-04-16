@@ -1,5 +1,7 @@
 #include "WindowManager.h"
 
+#include <poppler-qt6.h>
+
 #include <QMimeDatabase>
 #include <QMimeType>
 
@@ -78,6 +80,39 @@ void WindowManager::setURL(const QUrl& URL)
     {
         setFileType(QStringLiteral("video"));
     }
+    else if (mime.name() == QStringLiteral("application/pdf"))
+    {
+        std::unique_ptr<Poppler::Document> doc = Poppler::Document::load(URL.toLocalFile());
+
+        if (!doc) return;
+
+        int numPages = doc->numPages();
+        m_PageNum = numPages;
+
+        std::vector<QImage> pageImages;
+
+        pageImages.reserve(numPages);
+
+        for (int i = 0; i < numPages; i++)
+        {
+            std::unique_ptr<Poppler::Page> page = doc->page(i);
+
+            if (page) 
+            {
+                //TODO: PPI as config?
+                pageImages.push_back(page->renderToImage(300, 300));
+            }
+        }
+
+        if (m_pImageProvider)
+        {
+            m_pImageProvider->setDocumentImages(pageImages);
+        }
+        
+        Q_EMIT PageNumChanged();
+
+        setFileType(QStringLiteral("pdf"));
+    }
     else
     {
         QIcon icon = QIcon::fromTheme(mime.iconName());
@@ -89,7 +124,7 @@ void WindowManager::setURL(const QUrl& URL)
 
             setWindowSize(QSize(512, 512));
 
-            m_URL = QUrl(QStringLiteral("image://Maki/preview"));
+            m_URL = QUrl(QStringLiteral("image://Maki/fallback"));
         }
 
         setFileType(QStringLiteral("None"));
@@ -112,4 +147,9 @@ void WindowManager::setFileType(const QString& FileType)
 QString WindowManager::getFileText() const
 {
     return m_FileText;
+}
+
+int WindowManager::getPageNum() const
+{
+    return m_PageNum;
 }
