@@ -16,6 +16,8 @@ ScrollView
             width: ListView.view.width
             fillMode: Image.PreserveAspectFit
             source: "image://Maki/" + (index + 1)
+            smooth: true
+            mipmap: true
         }
     }
 }
