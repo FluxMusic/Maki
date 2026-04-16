@@ -70,6 +70,14 @@ void WindowManager::setURL(const QUrl& URL)
 
         setFileType(QStringLiteral("text"));
     }
+    else if (mime.name().startsWith(QStringLiteral("audio/")))
+    {
+        setFileType(QStringLiteral("audio"));
+    }
+    else if (mime.name().startsWith(QStringLiteral("video/")))
+    {
+        setFileType(QStringLiteral("video"));
+    }
     else
     {
         QIcon icon = QIcon::fromTheme(mime.iconName());

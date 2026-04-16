@@ -10,7 +10,7 @@ Kirigami.ApplicationWindow
     width: WindowManager.WindowSize.width
     height: WindowManager.WindowSize.height
 
-    title: i18nc("@title:window", "Hello World")
+    title: i18nc("@title:window", "Maki Preview")
 
     Loader
     {
@@ -21,6 +21,8 @@ Kirigami.ApplicationWindow
             {
                 case "image": return "ImagePreview.qml"
                 case "text" : return "TextPreview.qml"
+                case "audio": return "AudioPreview.qml"
+                case "video": return "VideoPreview.qml"
                 default: return "FallbackPreview.qml"
             }
         }

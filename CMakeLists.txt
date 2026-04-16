@@ -15,6 +15,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Quick
     Gui
     Widgets
+    Multimedia
 )
     
 find_package(KF6 REQUIRED COMPONENTS

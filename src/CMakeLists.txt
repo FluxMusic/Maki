@@ -24,6 +24,8 @@ ecm_target_qml_sources(Maki
     qml/ImagePreview.qml
     qml/FallbackPreview.qml
     qml/TextPreview.qml
+    qml/AudioPreview.qml
+    qml/VideoPreview.qml
 )
 
 target_link_libraries(Maki
@@ -32,6 +34,7 @@ target_link_libraries(Maki
     Qt6::Qml
     Qt6::Gui
     Qt6::Widgets
+    Qt6::Multimedia
     KF6::I18n
     KF6::CoreAddons
     KF6::IconThemes
