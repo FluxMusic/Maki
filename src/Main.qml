@@ -20,6 +20,7 @@ Kirigami.ApplicationWindow
             switch(WindowManager.FileType)
             {
                 case "image": return "ImagePreview.qml"
+                case "text" : return "TextPreview.qml"
                 default: return "FallbackPreview.qml"
             }
         }

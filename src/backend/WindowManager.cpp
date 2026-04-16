@@ -5,6 +5,8 @@
 
 #include <QImageReader>
 
+#include <QFile>
+
 #include <QIcon>
 
 WindowManager::WindowManager(QObject* parent)
@@ -43,22 +45,30 @@ void WindowManager::setURL(const QUrl& URL)
     {
         QImageReader reader(URL.toLocalFile());
         QSize imageSize = reader.size();
-
-        qWarning() << "width: " << imageSize.width();
-        qWarning() << "height: " << imageSize.height();
         
         //TODO: Currently hardcoded, fix later
         while (imageSize.width() >= 1920 || imageSize.height() >= 1080)
         {
             imageSize /= 2;
         }
-        
-        qWarning() << "width: " << imageSize.width();
-        qWarning() << "height: " << imageSize.height();
 
         setWindowSize(imageSize);
         
         setFileType(QStringLiteral("image"));
+    }
+    else if (mime.name().startsWith(QStringLiteral("text/")))
+    {
+        setWindowSize(QSize(300, 400));
+
+        QFile file(URL.toLocalFile());
+
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            m_FileText = QString::fromUtf8(file.readAll());
+            Q_EMIT FileTextChanged();
+        }
+
+        setFileType(QStringLiteral("text"));
     }
     else
     {
@@ -89,4 +99,9 @@ void WindowManager::setFileType(const QString& FileType)
 {
     m_FileType = FileType;
     Q_EMIT FileTypeChanged();
+}
+
+QString WindowManager::getFileText() const
+{
+    return m_FileText;
 }

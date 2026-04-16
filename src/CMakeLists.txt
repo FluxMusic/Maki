@@ -23,6 +23,7 @@ ecm_target_qml_sources(Maki
     Main.qml
     qml/ImagePreview.qml
     qml/FallbackPreview.qml
+    qml/TextPreview.qml
 )
 
 target_link_libraries(Maki
@@ -34,8 +35,6 @@ target_link_libraries(Maki
     KF6::I18n
     KF6::CoreAddons
     KF6::IconThemes
-    KF6::KIOCore
-    KF6::KIOGui
 )
 
 install(TARGETS Maki ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include <qqmlintegration.h>
-
+#include <QQuickTextDocument>
 #include <QSize>
 
 #include <QUrl>
@@ -19,6 +19,8 @@ class WindowManager : public QObject
     Q_PROPERTY(QString FileType READ getFileType WRITE setFileType NOTIFY FileTypeChanged)
     Q_PROPERTY(QUrl URL READ getURL WRITE setURL NOTIFY URLChanged)
     Q_PROPERTY(QSize WindowSize READ getWindowSize WRITE setWindowSize NOTIFY WindowSizeChanged)
+    Q_PROPERTY(QString FileText READ getFileText NOTIFY FileTextChanged)
+    
 public:
     explicit WindowManager(QObject* parent = nullptr);
 
@@ -37,12 +39,17 @@ public:
     void setFileType(const QString& FileType);
     Q_SIGNAL void FileTypeChanged();
 
+    QString getFileText() const;
+    Q_SIGNAL void FileTextChanged();
+
 private:
     QSize m_WindowSize;
 
     QUrl m_URL;
 
     QString m_FileType = QStringLiteral("Placeholder");
+
+    QString m_FileText = QStringLiteral("Placeholder");
 
     MakiImageProvider* m_pImageProvider { nullptr };
 };
