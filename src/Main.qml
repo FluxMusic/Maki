@@ -14,7 +14,9 @@ Kirigami.ApplicationWindow
 
     Loader
     {
-        anchors.fill: parent
+        width: parent.width
+        height: parent.width       
+
         source:
         {
             switch(WindowManager.FileType)

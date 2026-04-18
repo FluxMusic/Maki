@@ -27,6 +27,8 @@ find_package(KF6 REQUIRED COMPONENTS
 
 find_package(Poppler REQUIRED COMPONENTS Qt6)
 
+find_package(MpvQt REQUIRED)
+
 ecm_find_qmlmodule(org.kde.kirigami REQUIRED)
 
 add_subdirectory(src)

@@ -1,26 +1,17 @@
 import QtQuick
 import QtQuick.Controls
-import QtMultimedia
 
-Item
+MpvItem
 {
-    anchors.fill: parent
-    
-    MediaPlayer
+    id: videoPlayer
+
+    width: parent.width
+    height: parent.height
+
+    onReady:
     {
-        id: videoPlayer
+        console.log("Videofile URL ", WindowManager.URL)
 
-        source: WindowManager.URL
-        autoPlay: true
-        audioOutput: AudioOutput
-        {
-            volume: 1.0
-        }
-        videoOutput: VideoOutput
-        {
-            anchors.fill: parent
-        }
-
-        onErrorOccurred: console.log(videoPlayer.errorString)
+        loadFile(WindowManager.URL)
     }
 }

@@ -22,7 +22,7 @@ public:
         
         int page = id.toInt();
 
-        if (page == 0 || page >= (m_DocumentImages.size() + 1)) return QPixmap();
+        if (page == 0 || page >= static_cast<int>(m_DocumentImages.size() + 1)) return QPixmap();
         else
         {
             return m_DocumentImages[page - 1];

@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QtQml>
 #include <QUrl>
+#include <QQuickWindow>
 #include <KLocalizedContext>
 #include <KLocalizedString>
 #include <KIconTheme>
@@ -10,6 +11,8 @@
 
 int main(int argc, char* argv[])
 {
+    QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+    
     KIconTheme::initTheme();
 
     QApplication app(argc, argv);
