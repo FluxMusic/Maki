@@ -18,7 +18,7 @@ class WindowManager : public QObject
     //TODO: Do I really need Writing access?
     Q_PROPERTY(QString FileType READ getFileType WRITE setFileType NOTIFY FileTypeChanged)
     Q_PROPERTY(QUrl URL READ getURL WRITE setURL NOTIFY URLChanged)
-    Q_PROPERTY(QSize WindowSize READ getWindowSize WRITE setWindowSize NOTIFY WindowSizeChanged)
+    Q_PROPERTY(QSize WindowSize READ getWindowSize NOTIFY WindowSizeChanged)
     Q_PROPERTY(QString FileText READ getFileText NOTIFY FileTextChanged)
     Q_PROPERTY(int PageNum READ getPageNum NOTIFY PageNumChanged)
     
@@ -29,7 +29,6 @@ public:
 
 public:
     QSize getWindowSize() const;
-    void setWindowSize(const QSize& WindowSize);
     Q_SIGNAL void WindowSizeChanged();
 
     QUrl getURL() const;

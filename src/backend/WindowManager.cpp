@@ -25,12 +25,6 @@ QSize WindowManager::getWindowSize() const
     return m_WindowSize;
 }
 
-void WindowManager::setWindowSize(const QSize& WindowSize)
-{
-    m_WindowSize = WindowSize;
-    Q_EMIT WindowSizeChanged();
-}
-
 QUrl WindowManager::getURL() const
 {
     return m_URL;
@@ -45,22 +39,10 @@ void WindowManager::setURL(const QUrl& URL)
 
     if (mime.name().startsWith(QStringLiteral("image/")))
     {
-        QImageReader reader(URL.toLocalFile());
-        QSize imageSize = reader.size();
-        
-        //TODO: Currently hardcoded, fix later
-        while (imageSize.width() >= 1920 || imageSize.height() >= 1080)
-        {
-            imageSize /= 2;
-        }
-
-        setWindowSize(imageSize);
-        
         setFileType(QStringLiteral("image"));
     }
     else if (mime.name().startsWith(QStringLiteral("text/")))
     {
-        setWindowSize(QSize(300, 400));
 
         QFile file(URL.toLocalFile());
 
@@ -99,10 +81,18 @@ void WindowManager::setURL(const QUrl& URL)
 
             if (page) 
             {
-                //TODO: PPI as config?
-                pageImages.push_back(page->renderToImage(300, 300));
+                //TODO: DPI as config?
+                pageImages.push_back(page->renderToImage(720, 720));
             }
         }
+
+        //TODO: Currently sets the window size to the first page's size
+        //      But if there is ever a bigger page in the document
+        //      It will clip. Maybe set the size to the dimensions 
+        //      of the biggest pages? So the width will be the max
+        //      width of all the pages and the height as well
+        m_WindowSize = pageImages[0].size();
+        Q_EMIT WindowSizeChanged();
 
         if (m_pImageProvider)
         {
@@ -121,8 +111,6 @@ void WindowManager::setURL(const QUrl& URL)
         {
             //TODO: Should this be in a config?
             m_pImageProvider->setPixmap(icon.pixmap(512,512));
-
-            setWindowSize(QSize(512, 512));
 
             m_URL = QUrl(QStringLiteral("image://Maki/fallback"));
         }

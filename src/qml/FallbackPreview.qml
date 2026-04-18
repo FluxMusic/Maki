@@ -10,6 +10,14 @@ Item
         anchors.fill: parent
         source: WindowManager.URL
         visible: WindowManager.URL !== ""
+        fillMode: Image.PreserveAspectFit
+
+        Component.onCompleted:
+        {
+            //TODO: Move this to a config
+            root.width = 512;
+            root.height = 512;
+        }
     }
     Label
     {

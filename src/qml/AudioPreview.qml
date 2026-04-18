@@ -16,5 +16,12 @@ Item
         {
             volume: 1.0
         }
+
+        Component.onCompleted:
+        {
+            //TODO: put this in config
+            root.width = 500;
+            root.height = 280;
+        }
     }
 }

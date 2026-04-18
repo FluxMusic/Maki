@@ -7,15 +7,14 @@ Kirigami.ApplicationWindow
 {
     id: root
 
-    width: WindowManager.WindowSize.width
-    height: WindowManager.WindowSize.height
+    width: 640
+    height: 360
 
     title: i18nc("@title:window", "Maki Preview")
 
     Loader
     {
-        width: parent.width
-        height: parent.width       
+        anchors.fill: parent     
 
         source:
         {
