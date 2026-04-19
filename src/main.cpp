@@ -34,6 +34,8 @@ int main(int argc, char* argv[])
     
     if (manager)
     {
+        manager->initApp(&app);
+
         manager->setImageProvider(imageProvider);
 
         if (app.arguments().size() > 1)

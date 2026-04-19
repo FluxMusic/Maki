@@ -1,37 +1,71 @@
 import QtQuick
 import QtQuick.Controls
 
-MpvItem
+Item
 {
-    id: videoPlayer
-
     anchors.fill: parent
 
-    onReady:
+    MpvItem
     {
-        loadFile(WindowManager.URL);
+        id: videoPlayer
+
+        anchors.fill: parent
+
+        onReady:
+        {
+            loadFile(WindowManager.URL);
+        }
+
+        onVideoReconfig:
+        {
+            //TODO: Into a config
+            const maxScale = Qt.size(1920, 1080);
+
+            const videoSize = Qt.size(videoWidth, videoHeight);
+
+            const rw = maxScale.height * (videoSize.width / videoSize.height);
+
+            const useHeight = rw <= maxScale.width;
+
+            if (useHeight)
+            {
+                root.width = rw;
+                root.height = maxScale.height;
+            }
+            else
+            {
+                root.width = maxScale.width;
+                root.height = maxScale.width * (videoSize.height / videoSize.width);
+            }
+        }
     }
 
-    onVideoReconfig:
+    Button
     {
-        //TODO: Into a config
-        const maxScale = Qt.size(1920, 1080);
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: 8
 
-        const videoSize = Qt.size(videoWidth, videoHeight);
+        text: i18n("open")
 
-        const rw = maxScale.height * (videoSize.width / videoSize.height);
+        opacity: buttonHover.hovered ? 1.0 : 0.0
 
-        const useHeight = rw <= maxScale.width;
-
-        if (useHeight)
+        Behavior on opacity
         {
-            root.width = rw;
-            root.height = maxScale.height;
+            NumberAnimation { duration: 150 }
         }
-        else
+
+        onClicked:
         {
-            root.width = maxScale.width;
-            root.height = maxScale.width * (videoSize.height / videoSize.width);
+            console.log("clicked");
+            WindowManager.openInDefaultApp();
+        }
+
+        HoverHandler
+        {
+            id: buttonHover
+
+            margin: 64
         }
     }
 }

@@ -1,19 +1,29 @@
 #include "WindowManager.h"
 
+#include <KIO/OpenUrlJob>
+#include <KIO/JobUiDelegateFactory>
+
 #include <poppler-qt6.h>
-
-#include <QMimeDatabase>
-#include <QMimeType>
-
-#include <QImageReader>
 
 #include <QFile>
 
 #include <QIcon>
 
+#include <QImageReader>
+
+#include <QMimeDatabase>
+#include <QMimeType>
+
+#include <QTimer>
+
 WindowManager::WindowManager(QObject* parent)
 : QObject(parent)
 {}
+
+void WindowManager::initApp(QApplication* App)
+{
+    m_pApp = App;
+}
 
 void WindowManager::setImageProvider(MakiImageProvider* Provider)
 {
@@ -112,13 +122,19 @@ void WindowManager::setURL(const QUrl& URL)
             //TODO: Should this be in a config?
             m_pImageProvider->setPixmap(icon.pixmap(512,512));
 
-            m_URL = QUrl(QStringLiteral("image://Maki/fallback"));
+            m_FallbackURL = QUrl(QStringLiteral("image://Maki/fallback"));
+            Q_EMIT FallbackURLChanged();
         }
 
         setFileType(QStringLiteral("None"));
     }
     
     Q_EMIT URLChanged();
+}
+
+QUrl WindowManager::getFallbackURL() const
+{
+    return m_FallbackURL;
 }
 
 QString WindowManager::getFileType() const
@@ -140,4 +156,18 @@ QString WindowManager::getFileText() const
 int WindowManager::getPageNum() const
 {
     return m_PageNum;
+}
+
+void WindowManager::openInDefaultApp()
+{
+    auto* job = new KIO::OpenUrlJob(m_URL);
+    job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
+    job->start();
+
+    //TODO: Connect to DBus and only close app once the default app has loaded
+    if (m_pApp)
+    {
+        //Small delay so the app can actually load
+        QTimer::singleShot(150, m_pApp, &QCoreApplication::quit);
+    }
 }

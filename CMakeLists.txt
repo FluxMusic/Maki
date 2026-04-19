@@ -16,13 +16,14 @@ find_package(Qt6 REQUIRED COMPONENTS
     Gui
     Widgets
     Multimedia
-)
+    )
     
-find_package(KF6 REQUIRED COMPONENTS
+    find_package(KF6 REQUIRED COMPONENTS
     Kirigami
     I18n
     CoreAddons
     IconThemes
+    KIO
 )
 
 find_package(Poppler REQUIRED COMPONENTS Qt6)

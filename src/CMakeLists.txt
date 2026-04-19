@@ -42,6 +42,8 @@ target_link_libraries(Maki
     KF6::I18n
     KF6::CoreAddons
     KF6::IconThemes
+    KF6::KIOCore
+    KF6::KIOGui
     Poppler::Qt6
     MpvQt::MpvQt
 )
