@@ -20,6 +20,12 @@ public:
             return m_Pixmap;
         }
         
+        if (id == QStringLiteral("audioCover"))
+        {
+            return m_AudioCover;
+        }
+        
+        
         int page = id.toInt();
 
         if (page == 0 || page >= static_cast<int>(m_DocumentImages.size() + 1)) return QPixmap();
@@ -32,6 +38,11 @@ public:
     void setPixmap(const QPixmap& Pixmap)
     {
         m_Pixmap = Pixmap;
+    }
+
+    void setAudioCover(const QPixmap& Pixmap)
+    {
+        m_AudioCover = Pixmap;
     }
 
     void setDocumentImages(const std::vector<QImage> documentImages)
@@ -47,6 +58,8 @@ public:
 private:
 
     QPixmap m_Pixmap;
+
+    QPixmap m_AudioCover;
 
     std::vector<QPixmap> m_DocumentImages;
 };

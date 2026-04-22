@@ -46,6 +46,7 @@ target_link_libraries(Maki
     KF6::KIOGui
     Poppler::Qt6
     MpvQt::MpvQt
+    Taglib::Taglib
 )
 
 install(TARGETS Maki ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

@@ -16,6 +16,10 @@
 
 #include <QTimer>
 
+#include <taglib/mpegfile.h>
+#include <taglib/id3v2tag.h>
+#include <taglib/attachedpictureframe.h>
+
 WindowManager::WindowManager(QObject* parent)
 : QObject(parent)
 {}
@@ -66,6 +70,50 @@ void WindowManager::setURL(const QUrl& URL)
     }
     else if (mime.name().startsWith(QStringLiteral("audio/")))
     {
+        TagLib::MPEG::File file(URL.toLocalFile().toUtf8().constData());
+
+        if (file.isValid())
+        {
+            //Extract all other metadata here
+
+            //Extract the cover art
+            bool imageFound = false;
+            if (file.ID3v2Tag())
+            {
+                auto frames = file.ID3v2Tag()->frameListMap()["APIC"];
+                if (!frames.isEmpty())
+                {
+                    auto* frame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame*>(frames.front());
+                    if (frame)
+                    {
+                        QImage cover;
+                        cover.loadFromData(reinterpret_cast<const uchar*>(frame->picture().data()), frame->picture().size());
+                        if (!cover.isNull())
+                        {
+                            if (m_pImageProvider) m_pImageProvider->setAudioCover(QPixmap::fromImage(cover));
+                            m_AudioCoverURL = QUrl(QStringLiteral("image://Maki/audioCover"));
+                            Q_EMIT AudioCoverURLChanged();
+
+                            imageFound = true;
+                        }
+                    }
+                }
+            }
+
+            if (!imageFound)
+            {
+                QIcon icon = QIcon::fromTheme(mime.iconName());
+        
+                if (m_pImageProvider) m_pImageProvider->setAudioCover(icon.pixmap(512,512));
+                m_AudioCoverURL = QUrl(QStringLiteral("image://Maki/audioCover"));
+                Q_EMIT AudioCoverURLChanged();
+                qWarning() << "fall back to generic";
+            }
+            
+            
+        }
+        
+
         setFileType(QStringLiteral("audio"));
     }
     else if (mime.name().startsWith(QStringLiteral("video/")))
@@ -130,11 +178,22 @@ void WindowManager::setURL(const QUrl& URL)
     }
     
     Q_EMIT URLChanged();
+    Q_EMIT FileNameChanged();
 }
 
 QUrl WindowManager::getFallbackURL() const
 {
     return m_FallbackURL;
+}
+
+QUrl WindowManager::getAudioCoverURL() const
+{
+    return m_AudioCoverURL;
+}
+
+QString WindowManager::getFileName() const
+{
+    return m_URL.fileName();
 }
 
 QString WindowManager::getFileType() const

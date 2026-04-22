@@ -43,7 +43,6 @@ Item
 
         onClicked:
         {
-            console.log("clicked");
             WindowManager.openInDefaultApp();
         }
 
@@ -52,6 +51,48 @@ Item
             id: buttonHover
 
             margin: 64
+        }
+    }
+
+    Item
+    {
+        id: display
+
+        anchors.bottom: controls.top
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.left: parent.left
+
+        anchors.leftMargin: root.width / 8
+        anchors.rightMargin: root.width / 8
+        anchors.topMargin: root.height / 12
+
+        RowLayout
+        {
+            anchors.fill: parent
+            spacing: 16
+            
+            Image
+            {
+                source: WindowManager.AudioCoverURL
+
+                fillMode: Image.PreserveAspectFit
+
+                Layout.fillWidth: true
+                Layout.preferredWidth: parent.width * (2/5)
+                Layout.preferredHeight: parent.height
+            }
+
+            Label
+            {
+                text: WindowManager.FileName
+
+                verticalAlignment: Text.AlignVCenter
+
+                Layout.fillWidth: true
+                Layout.preferredWidth: parent.width * (3/5)
+                Layout.preferredHeight: parent.height
+            }
         }
     }
 

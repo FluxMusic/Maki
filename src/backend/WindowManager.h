@@ -20,6 +20,8 @@ class WindowManager : public QObject
     Q_PROPERTY(QString FileType READ getFileType WRITE setFileType NOTIFY FileTypeChanged)
     Q_PROPERTY(QUrl URL READ getURL WRITE setURL NOTIFY URLChanged)
     Q_PROPERTY(QUrl FallbackURL READ getFallbackURL NOTIFY FallbackURLChanged)
+    Q_PROPERTY(QUrl AudioCoverURL READ getAudioCoverURL NOTIFY AudioCoverURLChanged)
+    Q_PROPERTY(QString FileName READ getFileName NOTIFY FileNameChanged)
     Q_PROPERTY(QSize WindowSize READ getWindowSize NOTIFY WindowSizeChanged)
     Q_PROPERTY(QString FileText READ getFileText NOTIFY FileTextChanged)
     Q_PROPERTY(int PageNum READ getPageNum NOTIFY PageNumChanged)
@@ -42,6 +44,12 @@ public:
     QUrl getFallbackURL() const;
     Q_SIGNAL void FallbackURLChanged();
 
+    QUrl getAudioCoverURL() const;
+    Q_SIGNAL void AudioCoverURLChanged();
+
+    QString getFileName() const;
+    Q_SIGNAL void FileNameChanged();
+
     QString getFileType() const;
     void setFileType(const QString& FileType);
     Q_SIGNAL void FileTypeChanged();
@@ -60,6 +68,7 @@ private:
 
     QUrl m_URL;
     QUrl m_FallbackURL;
+    QUrl m_AudioCoverURL;
 
     QString m_FileType = QStringLiteral("Placeholder");
 
