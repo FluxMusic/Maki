@@ -221,12 +221,15 @@ void WindowManager::openInDefaultApp()
 {
     auto* job = new KIO::OpenUrlJob(m_URL);
     job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
-    job->start();
 
-    //TODO: Connect to DBus and only close app once the default app has loaded
-    if (m_pApp)
+    connect(job, &KJob::result, this, [this](KJob* job)
     {
-        //Small delay so the app can actually load
-        QTimer::singleShot(150, m_pApp, &QCoreApplication::quit);
-    }
+        if (job->error() == 0)
+        {
+            m_pApp->quit();
+        }
+        
+    });
+
+    job->start();
 }
