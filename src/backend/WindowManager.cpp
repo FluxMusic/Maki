@@ -91,7 +91,7 @@ void WindowManager::setURL(const QUrl& URL)
                         if (!cover.isNull())
                         {
                             if (m_pImageProvider) m_pImageProvider->setAudioCover(QPixmap::fromImage(cover));
-                            m_AudioCoverURL = QUrl(QStringLiteral("image://Maki/audioCover"));
+                            m_AudioCoverURL = QUrl(QStringLiteral("image://Maki/audioCover?") + QString::number(QDateTime::currentMSecsSinceEpoch()));
                             Q_EMIT AudioCoverURLChanged();
 
                             imageFound = true;
@@ -105,14 +105,11 @@ void WindowManager::setURL(const QUrl& URL)
                 QIcon icon = QIcon::fromTheme(mime.iconName());
         
                 if (m_pImageProvider) m_pImageProvider->setAudioCover(icon.pixmap(512,512));
-                m_AudioCoverURL = QUrl(QStringLiteral("image://Maki/audioCover"));
+                m_AudioCoverURL = QUrl(QStringLiteral("image://Maki/audioCover?") + QString::number(QDateTime::currentMSecsSinceEpoch()));
                 Q_EMIT AudioCoverURLChanged();
                 qWarning() << "fall back to generic";
             }
-            
-            
         }
-        
 
         setFileType(QStringLiteral("audio"));
     }

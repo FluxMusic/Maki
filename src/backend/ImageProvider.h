@@ -20,7 +20,7 @@ public:
             return m_Pixmap;
         }
         
-        if (id == QStringLiteral("audioCover"))
+        if (id.contains(QStringLiteral("audioCover")))
         {
             return m_AudioCover;
         }

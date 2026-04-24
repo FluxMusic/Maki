@@ -3,6 +3,7 @@
 #include <QtQml>
 #include <QUrl>
 #include <QQuickWindow>
+#include <KDBusService>
 #include <KLocalizedContext>
 #include <KLocalizedString>
 #include <KIconTheme>
@@ -31,7 +32,34 @@ int main(int argc, char* argv[])
     engine.loadFromModule("io.github.FluxMusic.Maki", "Main");
     
     WindowManager* manager = engine.singletonInstance<WindowManager*>("io.github.FluxMusic.Maki", "WindowManager");
-    
+
+    //Only one instance should exist at a time
+    KDBusService service(KDBusService::Unique);
+
+    QObject::connect(&service, &KDBusService::activateRequested, 
+        [manager, &app, imageProvider](const QStringList& args, const QString&)
+        {
+            if (manager)
+            {
+                manager->initApp(&app);
+
+                manager->setImageProvider(imageProvider);
+
+                if (args.size() > 1)
+                {
+                    manager->setURL(QUrl::fromUserInput(args[1]));
+                }
+                else
+                {
+                    qWarning() << "no arguments provided";
+                }
+            }
+            else
+            {
+                qWarning() << "nullptr";
+            }
+        });
+
     if (manager)
     {
         manager->initApp(&app);
@@ -51,6 +79,7 @@ int main(int argc, char* argv[])
     {
         qWarning() << "nullptr";
     }
+
 
     return app.exec();
 }

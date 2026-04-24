@@ -25,6 +25,7 @@ find_package(KF6 REQUIRED COMPONENTS
     CoreAddons
     IconThemes
     KIO
+    DBusAddons
 )
 
 # package for extracting images from pdfs

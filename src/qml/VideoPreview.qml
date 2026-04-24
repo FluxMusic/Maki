@@ -17,6 +17,13 @@ Item
 
         anchors.fill: parent
 
+        property url currentURL: WindowManager.URL
+
+        onCurrentURLChanged:
+        {
+            loadFile(WindowManager.URL);
+        }
+
         onReady:
         {
             loadFile(WindowManager.URL);
