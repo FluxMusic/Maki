@@ -45,10 +45,20 @@ public:
     Q_PROPERTY(double duration READ getDuration NOTIFY durationChanged)
     double getDuration() const;
     Q_SIGNAL void durationChanged();
+    
+    Q_PROPERTY(QString currentTimecode READ getCurrentTimecode NOTIFY currentTimecodeChanged)
+    QString getCurrentTimecode() const;
+    Q_SIGNAL void currentTimecodeChanged();
+    
+    Q_PROPERTY(QString endTimecode READ getEndTimecode NOTIFY endTimecodeChanged)
+    QString getEndTimecode() const;
+    Q_SIGNAL void endTimecodeChanged();
 
 private:
 
     void onPropertyChanged(const QString& property, const QVariant& value);
+
+    QString secondsToTimecode(double seconds);
 
 private:
 
@@ -62,4 +72,7 @@ private:
 
     double m_Position { 0.0 };
     double m_Duration { 0.0 };
+
+    QString m_CurrentTimecode { QStringLiteral("00:00") };
+    QString m_EndTimecode   { QStringLiteral("00:00") };
 };

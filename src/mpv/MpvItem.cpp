@@ -9,6 +9,7 @@ MpvItem::MpvItem(QQuickItem* parent)
     Q_EMIT observeProperty(QStringLiteral("height"), MPV_FORMAT_NODE);
     Q_EMIT observeProperty(QStringLiteral("time-pos"), MPV_FORMAT_DOUBLE);
     Q_EMIT observeProperty(QStringLiteral("duration"), MPV_FORMAT_DOUBLE);
+    Q_EMIT observeProperty(QStringLiteral("time-start"), MPV_FORMAT_DOUBLE);
 
     connect(mpvController(), &MpvController::propertyChanged,
             this,            &MpvItem::onPropertyChanged, 
@@ -120,6 +121,16 @@ double MpvItem::getDuration() const
     return m_Duration;
 }
 
+QString MpvItem::getCurrentTimecode() const
+{
+    return m_CurrentTimecode;
+}
+
+QString MpvItem::getEndTimecode() const
+{
+    return m_EndTimecode;
+}
+
 void MpvItem::onPropertyChanged(const QString& property, const QVariant& value)
 {
     if (property == QStringLiteral("width"))
@@ -135,11 +146,29 @@ void MpvItem::onPropertyChanged(const QString& property, const QVariant& value)
     else if (property == QStringLiteral("time-pos"))
     {
         m_Position = value.toDouble();
+        m_CurrentTimecode = secondsToTimecode(value.toDouble());
+        Q_EMIT currentTimecodeChanged();
         Q_EMIT positionChanged();
     }
     else if (property == QStringLiteral("duration"))
     {
         m_Duration = value.toDouble();
+        m_EndTimecode = secondsToTimecode(m_Duration);
         Q_EMIT durationChanged();
+        Q_EMIT endTimecodeChanged();
     }
+}
+
+QString MpvItem::secondsToTimecode(double seconds)
+{
+    int secondCount = std::floor(std::fmod(seconds, 60));
+    int minuteCount = std::floor(std::fmod(seconds/60, 60));
+    int hourCount   = std::floor(seconds / 3600);
+
+    int hourDigits  = std::max(2, static_cast<int>(QString::number(hourCount).length()));
+
+    return QString(QStringLiteral("%1:%2:%3"))
+        .arg(hourCount,   hourDigits, 10, QLatin1Char('0'))
+        .arg(minuteCount,          2, 10, QLatin1Char('0'))
+        .arg(secondCount,          2, 10, QLatin1Char('0'));
 }

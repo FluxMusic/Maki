@@ -176,6 +176,11 @@ Item
                 }
             }
 
+            Label
+            {
+                text: videoPlayer.currentTimecode
+            }
+
             Slider
             {
                 id: playbackSlider
@@ -201,6 +206,11 @@ Item
                         videoPlayer.pause = false;
                     }
                 }
+            }
+
+            Label
+            {
+                text: videoPlayer.endTimecode
             }
 
             Button
