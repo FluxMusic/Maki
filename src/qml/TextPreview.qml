@@ -1,25 +1,21 @@
 import QtQuick
 import QtQuick.Controls
 
-Item
-{
+Item {
     anchors.fill: parent
 
-    ScrollView
-    {
+    ScrollView {
         anchors.fill: parent
 
-        TextArea
-        {
+        TextArea {
             id: textArea
 
             readOnly: true
-            text: WindowManager.FileText
+            text: WindowManager.fileText
         }
     }
 
-    Button
-    {
+    Button {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 8
@@ -28,19 +24,16 @@ Item
 
         opacity: buttonHover.hovered ? 1.0 : 0.0
 
-        Behavior on opacity
-        {
+        Behavior on opacity {
             NumberAnimation { duration: 150 }
         }
 
-        onClicked:
-        {
+        onClicked: {
             console.log("clicked");
             WindowManager.openInDefaultApp();
         }
 
-        HoverHandler
-        {
+        HoverHandler {
             id: buttonHover
 
             margin: 64

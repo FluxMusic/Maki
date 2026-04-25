@@ -3,8 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 
-Kirigami.ApplicationWindow
-{
+Kirigami.ApplicationWindow {
     id: root
 
     width: 640
@@ -12,20 +11,17 @@ Kirigami.ApplicationWindow
 
     title: i18nc("@title:window", "Maki Preview")
 
-    Loader
-    {
+    Loader {
         anchors.fill: parent     
 
-        source:
-        {
-            switch(WindowManager.FileType)
-            {
-                case "image": return "ImagePreview.qml"
-                case "text" : return "TextPreview.qml"
-                case "audio": return "AudioPreview.qml"
-                case "video": return "VideoPreview.qml"
-                case "pdf"  : return "DocumentPreview.qml"
-                default: return "FallbackPreview.qml"
+        source: {
+            switch(WindowManager.fileType) {
+            case "image": return "ImagePreview.qml"
+            case "text" : return "TextPreview.qml"
+            case "audio": return "AudioPreview.qml"
+            case "video": return "VideoPreview.qml"
+            case "pdf"  : return "DocumentPreview.qml"
+            default     : return "FallbackPreview.qml"
             }
         }
     }

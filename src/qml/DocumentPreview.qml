@@ -1,30 +1,25 @@
 import QtQuick
 import QtQuick.Controls
 
-Item
-{
+Item {
     anchors.fill: parent
 
-    ScrollView
-    {
+    ScrollView {
         anchors.fill: parent
         
-        ListView
-        {
+        ListView {
             anchors.fill: parent
-            model: WindowManager.PageNum
+            model: WindowManager.pageNum
             spacing: 8
 
-            delegate: Image
-            {
+            delegate: Image {
                 width: parent.width
                 fillMode: Image.PreserveAspectFit
                 source: "image://Maki/" + (index + 1)
                 mipmap: true
             }
 
-            Component.onCompleted:
-            {
+            Component.onCompleted: {
 
                 //TODO: Put this into a config
                 const maxScale = Qt.size(1920, 1080);
@@ -35,13 +30,10 @@ Item
 
                 const useHeight = rw <= maxScale.width;
 
-                if (useHeight)
-                {
+                if (useHeight) {
                     root.width = rw;
                     root.height = maxScale.height;
-                }
-                else
-                {
+                } else {
                     root.width = maxScale.width;
                     root.height = maxScale.width * (pageSize.height / pageSize.width);
                 }
@@ -49,8 +41,7 @@ Item
         }
     }
 
-    Button
-    {
+    Button {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 8
@@ -59,19 +50,16 @@ Item
 
         opacity: buttonHover.hovered ? 1.0 : 0.0
 
-        Behavior on opacity
-        {
+        Behavior on opacity {
             NumberAnimation { duration: 150 }
         }
 
-        onClicked:
-        {
+        onClicked: {
             console.log("clicked");
             WindowManager.openInDefaultApp();
         }
 
-        HoverHandler
-        {
+        HoverHandler {
             id: buttonHover
 
             margin: 64

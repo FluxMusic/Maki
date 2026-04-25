@@ -5,32 +5,27 @@ import QtQuick.Layouts
 //to use colors
 import org.kde.kirigami as Kirigami
 
-Item
-{
+Item {
     anchors.fill: parent
 
     property bool videoControlsVisible: false
 
-    MpvItem
-    {
+    MpvItem {
         id: videoPlayer
 
         anchors.fill: parent
 
-        property url currentURL: WindowManager.URL
+        property url currentURL: WindowManager.url
 
-        onCurrentURLChanged:
-        {
-            loadFile(WindowManager.URL);
+        onCurrentURLChanged: {
+            loadFile(WindowManager.url);
         }
 
-        onReady:
-        {
-            loadFile(WindowManager.URL);
+        onReady: {
+            loadFile(WindowManager.url);
         }
 
-        onVideoReconfig:
-        {
+        onVideoReconfig: {
             //TODO: Into a config
             const maxScale = Qt.size(1280, 720);
 
@@ -40,42 +35,34 @@ Item
 
             const useHeight = rw <= maxScale.width;
 
-            if (useHeight)
-            {
+            if (useHeight) {
                 root.width = rw;
                 root.height = maxScale.height;
-            }
-            else
-            {
+            } else {
                 root.width = maxScale.width;
                 root.height = maxScale.width * (videoSize.height / videoSize.width);
             }
         }
 
-        MouseArea
-        {
+        MouseArea {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: (videoControlsVisible || videoControlsHover.hovered || volumeSliderHover.hovered) ? Qt.ArrowCursor : Qt.BlankCursor
 
-            onPositionChanged: 
-            {
+            onPositionChanged: {
                 videoControlsVisible = true
                 videoControlsHideTimer.restart()
             }
 
-            onPressed: function(mouse)
-            {
+            onPressed: function(mouse) {
                 //Only Left click is assigned for now, but check regardless
-                if (mouse.button === Qt.LeftButton)
-                {
+                if (mouse.button === Qt.LeftButton) {
                     videoPlayer.pause = !videoPlayer.pause;
                 }
             }
         }
 
-        Timer
-        {
+        Timer {
             id: videoControlsHideTimer
 
             interval: 1000
@@ -83,8 +70,7 @@ Item
         }
     }
 
-    Button
-    {
+    Button {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 8
@@ -93,27 +79,23 @@ Item
 
         opacity: buttonHover.hovered ? 1.0 : 0.0
 
-        Behavior on opacity
-        {
+        Behavior on opacity {
             NumberAnimation { duration: 150 }
         }
 
-        onClicked:
-        {
+        onClicked: {
             console.log("clicked");
             WindowManager.openInDefaultApp();
         }
 
-        HoverHandler
-        {
+        HoverHandler {
             id: buttonHover
 
             margin: 64
         }
     }
 
-    Rectangle
-    {
+    Rectangle {
         id: videoControls
 
         anchors.bottom: parent.bottom
@@ -130,8 +112,7 @@ Item
 
         topRightRadius: (muteButton.hovered || volumeSliderHover.hovered) ? 0 : 10
 
-        Behavior on topRightRadius
-        {
+        Behavior on topRightRadius {
             NumberAnimation { duration: 150 }
         }
 
@@ -141,18 +122,15 @@ Item
 
         opacity: (videoControlsVisible || videoControlsHover.hovered || volumeSliderHover.hovered) ? 1.0 : 0.0
 
-        Behavior on opacity
-        {
+        Behavior on opacity {
             NumberAnimation { duration: 150 }
         }
 
-        HoverHandler
-        {
+        HoverHandler {
             id: videoControlsHover
         }
 
-        RowLayout
-        {
+        RowLayout {
             id: videoControlsLayout
 
             anchors.fill: parent
@@ -162,27 +140,23 @@ Item
 
             spacing: 8
 
-            Button
-            {
+            Button {
                 id: playButton
 
                 display: AbstractButton.IconOnly
 
                 icon.name: videoPlayer.pause ? "media-playback-start" : "media-playback-pause"
 
-                onClicked:
-                {
+                onClicked: {
                     videoPlayer.pause = !videoPlayer.pause;
                 }
             }
 
-            Label
-            {
+            Label {
                 text: videoPlayer.currentTimecode
             }
 
-            Slider
-            {
+            Slider {
                 id: playbackSlider
 
                 Layout.fillWidth: true
@@ -195,26 +169,20 @@ Item
 
                 onMoved: videoPlayer.position = value;
 
-                onPressedChanged:
-                {
-                    if (pressed)
-                    {
+                onPressedChanged: {
+                    if (pressed) {
                         videoPlayer.pause = true;
-                    }
-                    else
-                    {
+                    } else {
                         videoPlayer.pause = false;
                     }
                 }
             }
 
-            Label
-            {
+            Label {
                 text: videoPlayer.endTimecode
             }
 
-            Button
-            {
+            Button {
                 id: muteButton
 
                 display: AbstractButton.IconOnly
@@ -225,8 +193,7 @@ Item
             }
         }
 
-        Rectangle
-        {
+        Rectangle {
             id: videoVolumeSliderContainer
 
             anchors.bottom: videoControls.top
@@ -246,20 +213,17 @@ Item
                      ? 1.0 
                      : 0.0
 
-            Behavior on opacity
-            {
+            Behavior on opacity {
                 NumberAnimation{ duration: 150 }
             }
             
-            HoverHandler
-            {
+            HoverHandler {
                 id: volumeSliderHover
                 enabled: muteButton.hovered || hovered
                 margin: 16
             }
 
-            Slider
-            {
+            Slider {
                 id: videoVolumeSlider
 
                 anchors.fill: parent

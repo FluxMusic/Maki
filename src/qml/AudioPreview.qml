@@ -3,31 +3,26 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtMultimedia
 
-Item
-{
+Item {
     anchors.fill: parent
     
-    MediaPlayer
-    {
+    MediaPlayer {
         id: audioPlayer
 
-        source: WindowManager.URL
+        source: WindowManager.url
         autoPlay: true
-        audioOutput: AudioOutput
-        {
+        audioOutput: AudioOutput {
             volume: 1.0
         }
 
-        Component.onCompleted:
-        {
+        Component.onCompleted: {
             //TODO: put this in config
             root.width = 500;
             root.height = 280;
         }
     }
 
-    Button
-    {
+    Button {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 8
@@ -36,26 +31,22 @@ Item
 
         opacity: buttonHover.hovered ? 1.0 : 0.0
 
-        Behavior on opacity
-        {
+        Behavior on opacity {
             NumberAnimation { duration: 150 }
         }
 
-        onClicked:
-        {
+        onClicked: {
             WindowManager.openInDefaultApp();
         }
 
-        HoverHandler
-        {
+        HoverHandler {
             id: buttonHover
 
             margin: 64
         }
     }
 
-    Item
-    {
+    Item {
         id: display
 
         anchors.bottom: controls.top
@@ -67,14 +58,12 @@ Item
         anchors.rightMargin: root.width / 8
         anchors.topMargin: root.height / 12
 
-        RowLayout
-        {
+        RowLayout {
             anchors.fill: parent
             spacing: 16
             
-            Image
-            {
-                source: WindowManager.AudioCoverURL
+            Image {
+                source: WindowManager.audioCoverURL
 
                 fillMode: Image.PreserveAspectFit
 
@@ -83,8 +72,7 @@ Item
                 Layout.preferredHeight: parent.height
             }
 
-            Label
-            {
+            Label {
                 text: WindowManager.FileName
 
                 verticalAlignment: Text.AlignVCenter
@@ -96,8 +84,7 @@ Item
         }
     }
 
-    Item
-    {
+    Item {
         id: controls
 
         anchors.bottom: parent.bottom
@@ -109,34 +96,27 @@ Item
         anchors.bottomMargin: root.height / 6
 
 
-        RowLayout
-        {
+        RowLayout {
             anchors.fill: parent
             spacing: 8
 
-            Button
-            {
+            Button {
                 id: playButton
 
                 display: AbstractButton.IconOnly
 
                 icon.name: audioPlayer.playing ? "media-playback-pause" : "media-playback-start"
 
-                onClicked:
-                {
-                    if (audioPlayer.playing)
-                    {
+                onClicked: {
+                    if (audioPlayer.playing) {
                         audioPlayer.pause();
-                    }
-                    else
-                    {
+                    } else {
                         audioPlayer.play();
                     }
                 }
             }
 
-            Slider
-            {
+            Slider {
                 id: playbackSlider
 
                 Layout.fillWidth: true
@@ -150,8 +130,7 @@ Item
                 onMoved: audioPlayer.setPosition(value);
             }
 
-            Button
-            {
+            Button {
                 id: muteButton
 
                 display: AbstractButton.IconOnly
@@ -160,15 +139,13 @@ Item
 
                 onClicked: audioPlayer.audioOutput.muted = !audioPlayer.audioOutput.muted;
 
-                HoverHandler
-                {
+                HoverHandler {
                     id: muteButtonHover
                 }
             }
         }
 
-        Slider
-        {
+        Slider {
             id: volumeSlider
 
             anchors.bottom: controls.top
@@ -191,13 +168,11 @@ Item
                     ? 1.0 
                     : 0.0
 
-            Behavior on opacity
-            {
+            Behavior on opacity {
                 NumberAnimation{ duration: 150 }
             }
             
-            HoverHandler
-            {
+            HoverHandler {
                 id: volumeSliderHover
                 enabled: muteButtonHover.hovered || hovered
                 margin: 16

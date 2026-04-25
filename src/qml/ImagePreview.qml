@@ -1,21 +1,18 @@
 import QtQuick
 import QtQuick.Controls
 
-Item
-{
+Item {
     anchors.fill: parent
     
-    Image
-    {
+    Image {
         anchors.fill: parent
-        source: WindowManager.URL
+        source: WindowManager.url
         fillMode: Image.PreserveAspectFit
         mipmap: true
 
-        property url currentURL: WindowManager.URL
+        property url currentURL: WindowManager.url
 
-        onCurrentURLChanged:
-        {
+        onCurrentURLChanged: {
             //TODO: Into a config
             const maxScale = Qt.size(1280, 720);
 
@@ -25,20 +22,16 @@ Item
 
             const useHeight = rw <= maxScale.width;
 
-            if (useHeight)
-            {
+            if (useHeight) {
                 root.width = rw;
                 root.height = maxScale.height;
-            }
-            else
-            {
+            } else {
                 root.width = maxScale.width;
                 root.height = maxScale.width * (imageSize.height / imageSize.width);
             }
         }
 
-        Component.onCompleted:
-        {
+        Component.onCompleted: {
             //TODO: Into a config
             const maxScale = Qt.size(1280, 720);
 
@@ -48,21 +41,17 @@ Item
 
             const useHeight = rw <= maxScale.width;
 
-            if (useHeight)
-            {
+            if (useHeight) {
                 root.width = rw;
                 root.height = maxScale.height;
-            }
-            else
-            {
+            } else {
                 root.width = maxScale.width;
                 root.height = maxScale.width * (imageSize.height / imageSize.width);
             }
         }
     }
 
-    Button
-    {
+    Button {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 8
@@ -71,19 +60,16 @@ Item
 
         opacity: buttonHover.hovered ? 1.0 : 0.0
 
-        Behavior on opacity
-        {
+        Behavior on opacity {
             NumberAnimation { duration: 150 }
         }
 
-        onClicked:
-        {
+        onClicked: {
             console.log("clicked");
             WindowManager.openInDefaultApp();
         }
 
-        HoverHandler
-        {
+        HoverHandler {
             id: buttonHover
 
             margin: 64

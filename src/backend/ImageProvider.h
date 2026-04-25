@@ -7,59 +7,55 @@ class MakiImageProvider : public QQuickImageProvider
 {
 public:
     MakiImageProvider()
-    : QQuickImageProvider(QQuickImageProvider::Pixmap)
-    {}
+        : QQuickImageProvider(QQuickImageProvider::Pixmap)
+    {
+    }
 
-    QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize) override
+    QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize) override
     {
         Q_UNUSED(size)
         Q_UNUSED(requestedSize)
 
-        if (id == QStringLiteral("fallback"))
-        {
-            return m_Pixmap;
+        if (id == QStringLiteral("fallback")) {
+            return m_pixmap;
         }
-        
-        if (id.contains(QStringLiteral("audioCover")))
-        {
-            return m_AudioCover;
+
+        if (id.contains(QStringLiteral("audioCover"))) {
+            return m_audioCover;
         }
-        
-        
+
         int page = id.toInt();
 
-        if (page == 0 || page >= static_cast<int>(m_DocumentImages.size() + 1)) return QPixmap();
-        else
-        {
-            return m_DocumentImages[page - 1];
+        if (page == 0 || page >= static_cast<int>(m_documentImages.size() + 1)) {
+            return QPixmap();
+        } else {
+            return m_documentImages[page - 1];
         }
     }
 
-    void setPixmap(const QPixmap& Pixmap)
+    void setPixmap(const QPixmap &pixmap)
     {
-        m_Pixmap = Pixmap;
+        m_pixmap = pixmap;
     }
 
-    void setAudioCover(const QPixmap& Pixmap)
+    void setAudioCover(const QPixmap &pixmap)
     {
-        m_AudioCover = Pixmap;
+        m_audioCover = pixmap;
     }
 
     void setDocumentImages(const std::vector<QImage> documentImages)
     {
-        m_DocumentImages.clear();
+        m_documentImages.clear();
 
-        for (QImage image : documentImages)
-        {
-            m_DocumentImages.push_back(QPixmap::fromImage(image));
+        for (QImage image : documentImages) {
+            m_documentImages.push_back(QPixmap::fromImage(image));
         }
     }
 
 private:
+    QPixmap m_pixmap;
 
-    QPixmap m_Pixmap;
+    QPixmap m_audioCover;
 
-    QPixmap m_AudioCover;
-
-    std::vector<QPixmap> m_DocumentImages;
+    std::vector<QPixmap> m_documentImages;
 };

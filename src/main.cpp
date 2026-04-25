@@ -37,49 +37,33 @@ int main(int argc, char* argv[])
     KDBusService service(KDBusService::Unique);
 
     QObject::connect(&service, &KDBusService::activateRequested, 
-        [manager, &app, imageProvider](const QStringList& args, const QString&)
-        {
-            if (manager)
-            {
+        [manager, &app, imageProvider](const QStringList& args, const QString&) {
+            if (manager) {
                 manager->initApp(&app);
-
                 manager->setImageProvider(imageProvider);
 
-                if (args.size() > 1)
-                {
+                if (args.size() > 1) {
                     manager->setURL(QUrl::fromUserInput(args[1]));
-                }
-                else
-                {
+                } else {
                     qWarning() << "no arguments provided";
                 }
-            }
-            else
-            {
+            } else {
                 qWarning() << "nullptr";
             }
         });
 
-    if (manager)
-    {
+    if (manager) {
         manager->initApp(&app);
-
         manager->setImageProvider(imageProvider);
 
-        if (app.arguments().size() > 1)
-        {
+        if (app.arguments().size() > 1) {
             manager->setURL(QUrl::fromUserInput(app.arguments()[1]));
-        }
-        else
-        {
+        } else {
             qWarning() << "no arguments provided";
         }
-    }
-    else
-    {
+    } else {
         qWarning() << "nullptr";
     }
-
 
     return app.exec();
 }
