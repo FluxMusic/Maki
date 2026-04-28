@@ -22,9 +22,11 @@ Item {
             Component.onCompleted: {
 
                 //TODO: Put this into a config
-                const maxScale = Qt.size(1920, 1080);
+                const maxScale = Qt.size(595, 842);
 
-                const pageSize = Qt.size(WindowManager.WindowSize.width, WindowManager.WindowSize.height);
+                const pageSize = Qt.size(WindowManager.windowSize.width, WindowManager.windowSize.height);
+
+                console.log(pageSize);
 
                 const rw = maxScale.height * (pageSize.width / pageSize.height);
 

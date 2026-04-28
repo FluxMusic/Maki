@@ -111,6 +111,10 @@ void WindowManager::setURL(const QUrl &url)
             return;
         }
 
+        doc->setRenderHint(Poppler::Document::RenderHint::Antialiasing, true);
+        doc->setRenderHint(Poppler::Document::RenderHint::TextAntialiasing, true);
+        doc->setRenderHint(Poppler::Document::RenderHint::ThinLineSolid, true);
+
         int numPages = doc->numPages();
         m_pageNum = numPages;
 
@@ -123,7 +127,7 @@ void WindowManager::setURL(const QUrl &url)
 
             if (page) {
                 // TODO: DPI as config?
-                pageImages.push_back(page->renderToImage(720, 720));
+                pageImages.push_back(page->renderToImage(72, 72));
             }
         }
 
