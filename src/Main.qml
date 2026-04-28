@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Alex Huber <alex.huber743@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls

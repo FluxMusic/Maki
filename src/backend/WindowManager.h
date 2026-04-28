@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Alex Huber <alex.huber743@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #pragma once
 
 #include <QApplication>
@@ -18,7 +21,7 @@ class WindowManager : public QObject
     Q_PROPERTY(QString fileType READ getFileType WRITE setFileType NOTIFY fileTypeChanged)
     Q_PROPERTY(QUrl url READ getURL WRITE setURL NOTIFY urlChanged)
     Q_PROPERTY(QUrl fallbackURL READ getFallbackURL NOTIFY fallbackURLChanged)
-    Q_PROPERTY(QUrl audioCoverURL READ getAudioCoverURL NOTIFY audioCoverURLChanged)
+    Q_PROPERTY(QUrl audioCovverURL READ getAudioCoverURL NOTIFY audioCoverURLChanged)
     Q_PROPERTY(QString fileName READ getFileName NOTIFY fileNameChanged)
     Q_PROPERTY(QSize windowSize READ getWindowSize NOTIFY windowSizeChanged)
     Q_PROPERTY(QString fileText READ getFileText NOTIFY fileTextChanged)

@@ -1,5 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Alex Huber <alex.huber743@gmail.com>
+# SPDX-License-Identifier: BSD-2-Clause
+
 cmake_minimum_required(VERSION 3.20)
-project(Maki)
+project(Maki VERSION 0.1)
 
 find_package(ECM 6.0.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -9,6 +12,7 @@ include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMFindQmlModule)
 include(ECMQmlModule)
+include(ECMUninstallTarget)
 
 # Core packages for most of the work
 find_package(Qt6 REQUIRED COMPONENTS

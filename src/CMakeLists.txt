@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Alex Huber <alex.huber743@gmail.com>
+# SPDX-License-Identifier: BSD-2-Clause
+
 add_executable(Maki)
 
 ecm_add_qml_module(Maki
