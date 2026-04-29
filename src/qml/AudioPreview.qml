@@ -76,7 +76,7 @@ Item {
             }
 
             Label {
-                text: WindowManager.FileName
+                text: WindowManager.fileName
 
                 verticalAlignment: Text.AlignVCenter
 
